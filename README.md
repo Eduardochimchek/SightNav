@@ -16,11 +16,13 @@
 
 ## 📦 Instalação
 
-### Pré-requisitos
+### Pré-requisitos para poder Compilar/Rodar o aplicativo
 
-- Node.js
-- Angular CLI
-- Cordova
+- Node.js (16.20.2 foi utilizada nesse projeto);
+- SDK android (API 35, instalada pelo SDK manager no android studio);
+- Cordova CLI (cordova-lib@12.0.1 foi utilizada nesse projeto);
+- Java 17 (Depende do Gradle que você utilizar);
+- Gradle (Gradle 8.8 foi utilizado nesse projeto);
 
 ### Clonando o Repositório
 
