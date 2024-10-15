@@ -1,0 +1,31 @@
+<div id="Acelerometro" class="MainAppProg">
+    <div class="menu_area_body_prog" style="display:block;">
+        <h2 style="margin: 15px 0;">Dados do Acelerômetro</h2>
+
+        <div class="AgrupaFields" style="margin-top:5px;">
+            <div class="material-textfield" style="width:30%; margin-right: 5px;">
+                <input class="input" disabled ng-model="acceleration.x" placeholder=" " type="text" style="width: 100%;">
+                <label class="label" style="padding: 0px;">Aceleração X (m/s²)</label>
+            </div>
+            
+            <div class="material-textfield" style="width:30%; margin-left: 5px;">
+                <input class="input" disabled ng-model="acceleration.y" placeholder=" " type="text" style="width: 100%;">
+                <label class="label" style="padding: 0px;">Aceleração Y (m/s²)</label>
+            </div>
+
+            <div class="material-textfield" style="width:30%; margin-left: 5px;">
+                <input class="input" disabled ng-model="acceleration.z" placeholder=" " type="text" style="width: 100%;">
+                <label class="label" style="padding: 0px;">Aceleração Z (m/s²)</label>
+            </div>
+        </div>
+
+        <div style="width:100%; height:10px;"></div>
+
+        <!-- Setinha 3D -->
+        <div class="arrow-3d" id="arrow"></div>
+
+        <div style="width:100%; height:10px;"></div>
+
+        <button class="button button-positive" ng-click="returnMenu()" style="margin-top: 15px;">Voltar</button>
+    </div>    
+</div>
