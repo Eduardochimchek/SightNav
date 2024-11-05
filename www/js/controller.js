@@ -1,26 +1,52 @@
 angular.module('app.controllers', [])
 .controller('AcelerometroCtrl', function($scope, $state) {
-    $scope.acceleration = {
-        x: 0,
-        y: 0,
-        z: 0
-    };
+    // Inicializa os valores
+    $scope.acceleration = { x: 0, y: 0, z: 0 };
+    $scope.velocidade = 0;
+    $scope.distancia = 0;
 
-    const arrow = document.getElementById('arrow');
+    const threshold = 0.3; // Limite mínimo para considerar movimento
+    const deltaT = 1; // Intervalo de tempo em segundos (ajustado para 1 segundo)
+    let lastAcceleration = { x: 0, y: 0, z: 0 }; // Armazena a última aceleração
+
+    let lastMovementTime = Date.now(); // Armazena o tempo do último movimento
+    const movementCooldown = 2000; // Tempo em milissegundos (2 segundos)
 
     function onSuccess(acceleration) {
-        $scope.acceleration.x = acceleration.x.toFixed(2);
-        $scope.acceleration.y = acceleration.y.toFixed(2);
-        $scope.acceleration.z = acceleration.z.toFixed(2);
-        $scope.$apply(); // Atualiza o scope
-        
-        // Calcula a rotação em graus
-        const rotationX = acceleration.y * 10; // Ajuste a escala conforme necessário
-        const rotationY = -acceleration.x * 10; // Ajuste a escala conforme necessário
-        const rotationZ = acceleration.z * 10; // Ajuste a escala conforme necessário
-        
-        // Aplica a rotação
-        arrow.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) rotateZ(${rotationZ}deg)`;
+        const accX = parseFloat(acceleration.x.toFixed(2));
+        const accY = parseFloat(acceleration.y.toFixed(2));
+        const accZ = parseFloat(acceleration.z.toFixed(2));
+
+        const accMagnitude = Math.sqrt(accX ** 2 + accY ** 2 + accZ ** 2);
+
+        const deltaAccX = Math.abs(accX - lastAcceleration.x);
+        const deltaAccY = Math.abs(accY - lastAcceleration.y);
+        const deltaAccZ = Math.abs(accZ - lastAcceleration.z);
+
+        // Verifica se há movimento significativo
+        if (accMagnitude > threshold && (deltaAccX > threshold || deltaAccY > threshold || deltaAccZ > threshold)) {
+            $scope.velocidade += accMagnitude * deltaT;
+            $scope.distancia += $scope.velocidade * deltaT;
+
+            $scope.velocidade = parseFloat($scope.velocidade.toFixed(2));
+            $scope.distancia = parseFloat($scope.distancia.toFixed(2));
+
+            // Atualiza o tempo do último movimento
+            lastMovementTime = Date.now();
+        } else {
+            // Verifica se o tempo desde o último movimento é maior que o cooldown
+            if (Date.now() - lastMovementTime > movementCooldown) {
+                // Reseta velocidade e distância se não houver movimento por um tempo
+                $scope.velocidade = 0;
+                $scope.distancia = 0;
+            }
+        }
+
+        lastAcceleration = { x: accX, y: accY, z: accZ };
+        $scope.acceleration.x = accX;
+        $scope.acceleration.y = accY;
+        $scope.acceleration.z = accZ;
+        $scope.$apply();
     }
 
     function onError() {

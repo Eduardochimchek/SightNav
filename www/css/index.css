@@ -1,46 +1,127 @@
+/* Estilos globais */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7f9;
     margin: 0;
     padding: 0;
-}
-
-.MainAppProg {
-    text-align: center;
-}
-
-h2 {
-    font-size: 24px;
     color: #333;
+}
+
+/* Container principal */
+.MainAppProg {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 30px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+h2 {
+    font-size: 28px;
+    color: #007BFF;
     margin-bottom: 20px;
 }
 
+/* Agrupamento dos campos */
 .AgrupaFields {
     display: flex;
-    justify-content: center;
-    margin: 15px 0;
+    justify-content: space-between;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    gap: 20px; /* Adiciona espaçamento entre os campos */
 }
 
+/* Estilo do campo de entrada */
 .material-textfield {
     position: relative;
+    width: 30%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
-/* Seta 3D estilizada */
+.material-textfield input {
+    width: 100%;
+    padding: 16px 20px; /* Aumentei o padding para melhorar o tamanho */
+    font-size: 18px; /* Aumentei o tamanho da fonte */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    color: #333;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Foco nos campos de entrada */
+.material-textfield input:focus {
+    border-color: #007BFF;
+    background-color: #ffffff;
+    outline: none;
+}
+
+/* Rótulo dos campos */
+.material-textfield label {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    font-size: 14px;
+    color: #555;
+    background-color: #f8f8f8;
+    padding: 0 5px;
+    transition: all 0.3s ease;
+    pointer-events: none; /* Para que o texto não interfira na interação com o campo */
+}
+
+/* Animação de foco no rótulo */
+.material-textfield input:focus + label,
+.material-textfield input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #007BFF;
+}
+
+/* Ajustes de espaçamento entre as seções */
+div[style*="height:10px;"] {
+    height: 20px;
+}
+
+/* Botão */
+.button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;
+}
+
+.button-positive {
+    background-color: #28a745; /* Verde para o botão "Voltar" */
+}
+
+.button:hover {
+    background-color: #218838;
+}
+
+/* Setas 3D */
 .arrow-3d {
     position: relative;
     width: 0;
     height: 0;
-    margin: 20px auto; /* Centraliza a setinha */
+    margin: 20px auto;
     border-left: 30px solid transparent;
     border-right: 30px solid transparent;
-    border-bottom: 60px solid #007BFF; /* Cor da seta */
+    border-bottom: 60px solid #007BFF;
     transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-    transition: transform 0.5s ease; /* Transição suave para rotação */
-    transform-style: preserve-3d; /* Permite a renderização 3D */
-    perspective: 1000px; /* Adiciona perspectiva para a rotação */
+    transition: transform 0.5s ease;
 }
 
-/* Sombra da seta */
 .arrow-3d:before {
     content: '';
     position: absolute;
@@ -50,35 +131,36 @@ h2 {
     height: 0;
     border-left: 30px solid transparent;
     border-right: 30px solid transparent;
-    border-bottom: 60px solid rgba(0, 0, 0, 0.2); /* Sombra para a seta */
+    border-bottom: 60px solid rgba(0, 0, 0, 0.2);
     transform: rotateX(45deg);
     opacity: 0.5;
 }
 
-/* Cabeça da seta */
 .arrow-3d:after {
     content: '';
     position: absolute;
     left: -10px;
-    top: -40px; /* Ajuste para posicionar a cabeça da seta */
+    top: -40px;
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 20px solid #007BFF; /* Mesma cor da seta */
-    transform: rotate(0deg);
+    border-bottom: 20px solid #007BFF;
 }
 
-/* Estilização do botão */
-.button {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+/* Melhorias no Layout Responsivo */
+@media (max-width: 768px) {
+    .AgrupaFields {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.button-positive {
-    background-color: #28a745; /* Verde para o botão "Voltar" */
+    .material-textfield {
+        width: 80%;
+    }
+
+    .button {
+        width: 80%;
+        margin-top: 20px;
+    }
 }
