@@ -1,0 +1,21 @@
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.fontSize": 14,    
+    "files.associations": {
+        "*.html": "html",
+        "*.css": "css"
+    },
+    "[abl]": {
+        "files.encoding": "iso88591"
+    },        
+    "window.zoomLevel": -1,
+    "files.encoding": "utf8",    
+    "editor.detectIndentation": false,
+    "editor.renderControlCharacters": false,
+    "files.defaultLanguage": "abl",
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "liveServer.settings.donotVerifyTags": true,
+    "liveServer.settings.donotShowInfoMsg": true
+}

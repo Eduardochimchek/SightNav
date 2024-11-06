@@ -2,14 +2,15 @@ angular.module('app.controllers', [])
 .controller('AcelerometroCtrl', function($scope, $state) {
     // Inicializa os valores
     $scope.acceleration = { x: 0, y: 0, z: 0 };
-    $scope.velocidade = 0;
-    $scope.distancia = 0;
+    $scope.velocidade = 0; // em metros por segundo
+    $scope.distancia = 0; // em metros
 
-    const threshold = 0.3; // Limite mÌnimo para considerar movimento
-    const deltaT = 1; // Intervalo de tempo em segundos (ajustado para 1 segundo)
-    let lastAcceleration = { x: 0, y: 0, z: 0 }; // Armazena a ˙ltima aceleraÁ„o
+    const threshold = 0.5; // Limite m√≠nimo para considerar movimento significativo
+    const deltaT = 0.1; // Intervalo de tempo em segundos (ajustado para 0.1 segundos)
+    let lastAcceleration = { x: 0, y: 0, z: 0 };
+    let filteredAcceleration = { x: 0, y: 0, z: 0 }; // Valores filtrados para suavizar
 
-    let lastMovementTime = Date.now(); // Armazena o tempo do ˙ltimo movimento
+    let lastMovementTime = Date.now(); // Armazena o tempo do √∫ltimo movimento
     const movementCooldown = 2000; // Tempo em milissegundos (2 segundos)
 
     function onSuccess(acceleration) {
@@ -17,50 +18,55 @@ angular.module('app.controllers', [])
         const accY = parseFloat(acceleration.y.toFixed(2));
         const accZ = parseFloat(acceleration.z.toFixed(2));
 
-        const accMagnitude = Math.sqrt(accX ** 2 + accY ** 2 + accZ ** 2);
+        // Aplica um filtro simples (filtro de m√©dia) para suavizar a acelera√ß√£o
+        filteredAcceleration.x = 0.8 * filteredAcceleration.x + 0.2 * accX;
+        filteredAcceleration.y = 0.8 * filteredAcceleration.y + 0.2 * accY;
+        filteredAcceleration.z = 0.8 * filteredAcceleration.z + 0.2 * accZ;
 
-        const deltaAccX = Math.abs(accX - lastAcceleration.x);
-        const deltaAccY = Math.abs(accY - lastAcceleration.y);
-        const deltaAccZ = Math.abs(accZ - lastAcceleration.z);
+        const accMagnitude = Math.sqrt(filteredAcceleration.x ** 2 + filteredAcceleration.y ** 2 + filteredAcceleration.z ** 2);
 
-        // Verifica se h· movimento significativo
+        const deltaAccX = Math.abs(filteredAcceleration.x - lastAcceleration.x);
+        const deltaAccY = Math.abs(filteredAcceleration.y - lastAcceleration.y);
+        const deltaAccZ = Math.abs(filteredAcceleration.z - lastAcceleration.z);
+
+        // Verifica se h√° movimento significativo (para reduzir a acumula√ß√£o)
         if (accMagnitude > threshold && (deltaAccX > threshold || deltaAccY > threshold || deltaAccZ > threshold)) {
-            $scope.velocidade += accMagnitude * deltaT;
-            $scope.distancia += $scope.velocidade * deltaT;
+            $scope.velocidade += accMagnitude * deltaT; // Calcula a velocidade em m/s
+            $scope.distancia += $scope.velocidade * deltaT; // Calcula a dist√¢ncia em metros
 
             $scope.velocidade = parseFloat($scope.velocidade.toFixed(2));
             $scope.distancia = parseFloat($scope.distancia.toFixed(2));
 
-            // Atualiza o tempo do ˙ltimo movimento
+            // Atualiza o tempo do √∫ltimo movimento
             lastMovementTime = Date.now();
         } else {
-            // Verifica se o tempo desde o ˙ltimo movimento È maior que o cooldown
+            // Verifica se o tempo desde o √∫ltimo movimento √© maior que o cooldown
             if (Date.now() - lastMovementTime > movementCooldown) {
-                // Reseta velocidade e dist‚ncia se n„o houver movimento por um tempo
+                // Reseta velocidade e dist√¢ncia se n√£o houver movimento por um tempo
                 $scope.velocidade = 0;
                 $scope.distancia = 0;
             }
         }
 
-        lastAcceleration = { x: accX, y: accY, z: accZ };
-        $scope.acceleration.x = accX;
-        $scope.acceleration.y = accY;
-        $scope.acceleration.z = accZ;
+        lastAcceleration = { x: filteredAcceleration.x, y: filteredAcceleration.y, z: filteredAcceleration.z };
+        $scope.acceleration.x = filteredAcceleration.x;
+        $scope.acceleration.y = filteredAcceleration.y;
+        $scope.acceleration.z = filteredAcceleration.z;
         $scope.$apply();
     }
 
     function onError() {
-        console.error('Erro ao obter dados do acelerÙmetro.');
+        console.error('Erro ao obter dados do aceler√¥metro.');
     }
 
-    // Define as opÁıes do acelerÙmetro
-    const options = { frequency: 1000 }; // 1 segundo
+    // Define as op√ß√µes do aceler√¥metro
+    const options = { frequency: 100 }; // Frequ√™ncia ajustada para 10 vezes por segundo
 
-    // Inicia a captura dos dados do acelerÙmetro
+    // Inicia a captura dos dados do aceler√¥metro
     navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
     
-    // FunÁ„o para retornar ao menu
+    // Fun√ß√£o para retornar ao menu
     $scope.returnMenu = function() {
-        $state.go('home'); // Altere para o nome da sua p·gina inicial
+        $state.go('home'); // Altere para o nome da sua p√°gina inicial
     };
 });
