@@ -1,5 +1,6 @@
 /* Estilos globais */
 body {
+    height: 100vh;
     font-family: 'Roboto', sans-serif;
     background-color: #f4f7f9;
     margin: 0;
@@ -18,20 +19,16 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Título */
+/* TÃ­tulo */
 h2 {
     font-size: 28px;
     color: #007BFF;
     margin-bottom: 20px;
 }
 
-/* Agrupamento dos campos */
-.AgrupaFields {
-    display: flex;
-    justify-content: space-between;
+/* Frame superior com a seta 3D */
+.frame {
     margin: 20px 0;
-    flex-wrap: wrap;
-    gap: 20px; /* Adiciona espaçamento entre os campos */
 }
 
 /* Estilo do campo de entrada */
@@ -44,8 +41,8 @@ h2 {
 
 .material-textfield input {
     width: 100%;
-    padding: 16px 20px; /* Aumentei o padding para melhorar o tamanho */
-    font-size: 18px; /* Aumentei o tamanho da fonte */
+    padding: 16px 20px;
+    font-size: 18px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f8f8f8;
@@ -54,14 +51,6 @@ h2 {
     transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
-/* Foco nos campos de entrada */
-.material-textfield input:focus {
-    border-color: #007BFF;
-    background-color: #ffffff;
-    outline: none;
-}
-
-/* Rótulo dos campos */
 .material-textfield label {
     position: absolute;
     top: 0;
@@ -71,42 +60,16 @@ h2 {
     background-color: #f8f8f8;
     padding: 0 5px;
     transition: all 0.3s ease;
-    pointer-events: none; /* Para que o texto não interfira na interação com o campo */
+    pointer-events: none;
 }
 
-/* Animação de foco no rótulo */
+/* AnimaÃ§Ã£o de foco no rÃ³tulo */
 .material-textfield input:focus + label,
 .material-textfield input:not(:placeholder-shown) + label {
     top: -10px;
     left: 10px;
     font-size: 12px;
     color: #007BFF;
-}
-
-/* Ajustes de espaçamento entre as seções */
-div[style*="height:10px;"] {
-    height: 20px;
-}
-
-/* Botão */
-.button {
-    background-color: #28a745;
-    color: white;
-    padding: 12px 25px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 30px;
-}
-
-.button-positive {
-    background-color: #28a745; /* Verde para o botão "Voltar" */
-}
-
-.button:hover {
-    background-color: #218838;
 }
 
 /* Setas 3D */
@@ -148,6 +111,32 @@ div[style*="height:10px;"] {
     border-bottom: 20px solid #007BFF;
 }
 
+/* Ajustes de espaÃ§amento entre as seÃ§Ãµes */
+div[style*="height:10px;"] {
+    height: 20px;
+}
+
+/* BotÃ£o */
+.button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 30px;
+}
+
+.button-positive {
+    background-color: #28a745;
+}
+
+.button:hover {
+    background-color: #218838;
+}
+
 /* Melhorias no Layout Responsivo */
 @media (max-width: 768px) {
     .AgrupaFields {
@@ -162,5 +151,10 @@ div[style*="height:10px;"] {
     .button {
         width: 80%;
         margin-top: 20px;
+    }
+
+    /* Ajusta os frames para tela pequena */
+    #frameSuperior, #frameInferior {
+        width: 100%;
     }
 }
