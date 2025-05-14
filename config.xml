@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.eduardoj.sightnav" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>SighNav</name>
-    <description>Aplicativo de geolocaliza��o assistiva</description>
+<widget id="com.eduardoj.sightnav" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>SightNav</name>
+    <description>Aplicativo de geolocalização assistiva</description>
     <author email="eduardochimcheck@gmail.com" href="https://cordova.apache.org">
         Eduardo
     </author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+
+    <!-- Permissões para localização no Android -->
+    <platform name="android">
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    </platform>
+
 </widget>

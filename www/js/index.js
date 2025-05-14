@@ -8,6 +8,10 @@ document.addEventListener('deviceready', onDeviceReady, false);
 function onDeviceReady() {
     StatusBar.styleLightContent();
 
+    window.plugins.insomnia.keepAwake();
+
+    screen.orientation.lock('portrait');
+
     document.addEventListener("backbutton", function (e) {
         e.preventDefault();
     }, false );
